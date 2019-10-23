@@ -134,7 +134,7 @@ dFees_Discount_IncGST = 0
                         dFees_IncGST_RunningTotal = dFees_IncGST_RunningTotal + dFees_IncGST
                         
                         ' insert figures into template
-                        .Item("BC_Fees_ExGST_" & i).Range.InsertAfter Format(dFees_ExGST, "#,###")
+                        .Item("BC_Fees_ExGST_" & i).Range.InsertAfter VBA.Format(dFees_ExGST, "#,###")
                     
                     Else ' remove unused fee row from template
                         .Item("BC_Fees_" & i).Range.Rows.Delete
@@ -243,7 +243,7 @@ dFees_Discount_IncGST = 0
                 ' insert subconsultant fees/additional scope
                 For i = 1 To BC_AddScope_Count
                     If wsLists.Range("BC_AddScope_Fees_Status_" & i) = True Then
-                        .Item("BC_AddScope_Fees_ExGST_" & i).Range.InsertAfter Format(wsLists.Range("BC_AddScope_Fees_Status_" & i).Offset(0, 1), "#,###")
+                        .Item("BC_AddScope_Fees_ExGST_" & i).Range.InsertAfter VBA.Format(wsLists.Range("BC_AddScope_Fees_Status_" & i).Offset(0, 1), "#,###")
                         bAdditionalScope = True
                     Else ' delete wording from template
                         .Item("BC_AddScope_Fees_" & i).Range.Rows.Delete
@@ -283,13 +283,13 @@ dFees_Discount_IncGST = 0
                     dFees_ExGST_RunningTotal = dFees_ExGST_RunningTotal - dFees_Discount_ExGST
                     
                     ' insert discount total
-                    .Item("BC_Fees_ExGST_Discount").Range.InsertAfter Format(dFees_Discount_ExGST, "#,###")
+                    .Item("BC_Fees_ExGST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_ExGST, "#,###")
                 Else
                     .Item("BC_Fees_Discount").Range.Rows.Delete
                 End If
                 
                 ' insert total fees
-                .Item("BC_Fees_ExGST_Total").Range.InsertAfter Format(dFees_ExGST_RunningTotal, "#,###")
+                .Item("BC_Fees_ExGST_Total").Range.InsertAfter VBA.Format(dFees_ExGST_RunningTotal, "#,###")
                         
             Case "TOE_CC"
             
@@ -324,9 +324,9 @@ dFees_Discount_IncGST = 0
                         dFees_IncGST_RunningTotal = dFees_IncGST_RunningTotal + dFees_IncGST
                         
                         ' insert figures into template
-                        .Item("CC_Fees_ExGST_" & i).Range.InsertAfter Format(dFees_ExGST, "#,###")
-                        .Item("CC_Fees_GST_" & i).Range.InsertAfter Format(dFees_GST, "#,###")
-                        .Item("CC_Fees_IncGST_" & i).Range.InsertAfter Format(dFees_IncGST, "#,###")
+                        .Item("CC_Fees_ExGST_" & i).Range.InsertAfter VBA.Format(dFees_ExGST, "#,###")
+                        .Item("CC_Fees_GST_" & i).Range.InsertAfter VBA.Format(dFees_GST, "#,###")
+                        .Item("CC_Fees_IncGST_" & i).Range.InsertAfter VBA.Format(dFees_IncGST, "#,###")
                     
                     Else ' remove unused fee row from template
                         .Item("CC_Fees_" & i).Range.Rows.Delete
@@ -347,9 +347,9 @@ dFees_Discount_IncGST = 0
                     dFees_IncGST_RunningTotal = dFees_IncGST_RunningTotal - dFees_Discount_IncGST
                     
                     ' insert discount total
-                    .Item("CC_Fees_ExGST_Discount").Range.InsertAfter Format(dFees_Discount_ExGST, "#,###")
-                    .Item("CC_Fees_GST_Discount").Range.InsertAfter Format(dFees_Discount_GST, "#,###")
-                    .Item("CC_Fees_IncGST_Discount").Range.InsertAfter Format(dFees_Discount_IncGST, "#,###")
+                    .Item("CC_Fees_ExGST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_ExGST, "#,###")
+                    .Item("CC_Fees_GST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_GST, "#,###")
+                    .Item("CC_Fees_IncGST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_IncGST, "#,###")
                 Else
                     .Item("CC_Fees_Discount").Range.Rows.Delete
                 End If
@@ -361,9 +361,9 @@ dFees_Discount_IncGST = 0
                 .Item("scopeOfService").Range.Paste
                 
                 ' insert total fees
-                .Item("CC_Fees_ExGST_Total").Range.InsertAfter Format(dFees_ExGST_RunningTotal, "#,###")
-                .Item("CC_Fees_GST_Total").Range.InsertAfter Format(dFees_GST_RunningTotal, "#,###")
-                .Item("CC_Fees_IncGST_Total").Range.InsertAfter Format(dFees_IncGST_RunningTotal, "#,###")
+                .Item("CC_Fees_ExGST_Total").Range.InsertAfter VBA.Format(dFees_ExGST_RunningTotal, "#,###")
+                .Item("CC_Fees_GST_Total").Range.InsertAfter VBA.Format(dFees_GST_RunningTotal, "#,###")
+                .Item("CC_Fees_IncGST_Total").Range.InsertAfter VBA.Format(dFees_IncGST_RunningTotal, "#,###")
             
                 ' enter CBRE details
                 If sSelectedCountry = "Australia" Then
@@ -435,9 +435,9 @@ dFees_Discount_IncGST = 0
                         dFees_IncGST_RunningTotal = dFees_IncGST_RunningTotal + dFees_IncGST
                         
                         ' insert figures into template
-                        .Item("TaxDep_Fees_ExGST_" & i).Range.InsertAfter Format(dFees_ExGST, "#,###")
-                        .Item("TaxDep_Fees_GST_" & i).Range.InsertAfter Format(dFees_GST, "#,###")
-                        .Item("TaxDep_Fees_IncGST_" & i).Range.InsertAfter Format(dFees_IncGST, "#,###")
+                        .Item("TaxDep_Fees_ExGST_" & i).Range.InsertAfter VBA.Format(dFees_ExGST, "#,###")
+                        .Item("TaxDep_Fees_GST_" & i).Range.InsertAfter VBA.Format(dFees_GST, "#,###")
+                        .Item("TaxDep_Fees_IncGST_" & i).Range.InsertAfter VBA.Format(dFees_IncGST, "#,###")
                     
                     Else ' remove unused fee row from template
                         .Item("TaxDep_Fees_" & i).Range.Rows.Delete
@@ -458,9 +458,9 @@ dFees_Discount_IncGST = 0
                     dFees_IncGST_RunningTotal = dFees_IncGST_RunningTotal - dFees_Discount_IncGST
                     
                     ' insert discount total
-                    .Item("TaxDep_Fees_ExGST_Discount").Range.InsertAfter Format(dFees_Discount_ExGST, "#,###")
-                    .Item("TaxDep_Fees_GST_Discount").Range.InsertAfter Format(dFees_Discount_GST, "#,###")
-                    .Item("TaxDep_Fees_IncGST_Discount").Range.InsertAfter Format(dFees_Discount_IncGST, "#,###")
+                    .Item("TaxDep_Fees_ExGST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_ExGST, "#,###")
+                    .Item("TaxDep_Fees_GST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_GST, "#,###")
+                    .Item("TaxDep_Fees_IncGST_Discount").Range.InsertAfter VBA.Format(dFees_Discount_IncGST, "#,###")
                 Else
                     .Item("TaxDep_Fees_Discount").Range.Rows.Delete
                 End If
@@ -468,9 +468,9 @@ dFees_Discount_IncGST = 0
                 Application.StatusBar = "Formatting document..."
                 
                 ' insert total fees
-                .Item("TaxDep_Fees_ExGST_Total").Range.InsertAfter Format(dFees_ExGST_RunningTotal, "#,###")
-                .Item("TaxDep_Fees_GST_Total").Range.InsertAfter Format(dFees_GST_RunningTotal, "#,###")
-                .Item("TaxDep_Fees_IncGST_Total").Range.InsertAfter Format(dFees_IncGST_RunningTotal, "#,###")
+                .Item("TaxDep_Fees_ExGST_Total").Range.InsertAfter VBA.Format(dFees_ExGST_RunningTotal, "#,###")
+                .Item("TaxDep_Fees_GST_Total").Range.InsertAfter VBA.Format(dFees_GST_RunningTotal, "#,###")
+                .Item("TaxDep_Fees_IncGST_Total").Range.InsertAfter VBA.Format(dFees_IncGST_RunningTotal, "#,###")
                 
                 ' insert Attachment 2 table
                 If sAttachmentTableRangeSelection <> "" Then

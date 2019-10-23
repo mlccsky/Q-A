@@ -30,12 +30,15 @@ Dim i As Integer
         
         ' amend range for each surveyor for the Disbursements in Auto Quote worksheet
         For i = AutoQuote_UserStartRow To AutoQuote_UserLastRow
-            wsQuote.Range("f" & i).Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!C" & i & ",Disbursements!$C$9:$C$" & iLastRow & ")"
+            'wsQuote.Range("f" & i).Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!C" & i & ",Disbursements!$C$9:$C$" & iLastRow & ")"
+            wsQuote.Range("F" & i).Formula = "=SUMIFS(Disbursements!$F$9:$F$" & iLastRow & ",Disbursements!A9:A" & iLastRow _
+            & ",'Quote'!C" & i & ",Disbursements!$D$9:$D$" & iLastRow & ", " & chr(34) & "Exclusive" & chr(34) & ")"
         Next i
-        
         ' amend range for primary operator
-        wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow _
+        'wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIFS(Disbursements!$A$9:$A$" & iLastRow _
         & ",'Quote'!Allocation_PrimOperator" & ",Disbursements!$C$9:$C$" & iLastRow & ")"
+        wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIFS(Disbursements!$F$9:$F$" & iLastRow & ",Disbursements!A9:A" & iLastRow _
+        & ",'Quote'!Allocation_PrimOperator" & ",Disbursements!$D$9:$D$" & iLastRow & ", " & chr(34) & "Exclusive" & chr(34) & ")"
         
     End If
     
@@ -66,7 +69,7 @@ Dim rCell As Range
     
     If insertValues(ws.Name, Selection.row + 1) Then
         ' sort list in order of user only if data was successfully inserted
-        iLastRow = lastRow(ws.Name, sortCell_K1)
+        iLastRow = lastRow(ws.Name, sortCell_K2)
         
         If iLastRow > 500000 Then
             iLastRow = 120
@@ -78,14 +81,15 @@ Dim rCell As Range
         
         ws.Range(sortCell_K1 & ":G" & iLastRow).Sort rSortCell_K1, xlAscending, rSortCell_K2
         
-        ' amend range for total disbursements
+        ' amend range for total subconsultants
         ws.Range("TotalSubConsultants").Formula = "=SUM(G9:G" & iLastRow & ")"
         
         ' amend range for scope item (i.e. TDD, Sched Make Good, FARR, Progress Claim etc..) in Auto Quote worksheet
         For i = AutoQuote_ScopeStartRow To AutoQuote_ScopeLastRow
-            wsQuote.Range("F" & i).Formula = "=SUMIF(SubConsultants!$B$9:$B$" & iLastRow & ",'Quote'!C" & i & ",SubConsultants!$D$9:$D$" & iLastRow & ")"
+'            wsQuote.Range("F" & i).Formula = "=SUMIF(SubConsultants!$B$9:$B$" & iLastRow & ",'Quote'!C" & i & ",SubConsultants!$D$9:$D$" & iLastRow & ")"
+            wsQuote.Range("F" & i).Formula = "=SUMIFS(SubConsultants!$D$9:$D$" & iLastRow & ",SubConsultants!$B$9:$B$" & iLastRow _
+            & ",Quote!C" & i & ",SubConsultants!E9:E" & iLastRow & "," & chr(34) & "Exclusive" & chr(34) & ")"
         Next i
-        
     End If
     
     Set rSortCell_K1 = Nothing
@@ -321,13 +325,16 @@ Dim iLastRow As Long
     
     ' Primary Operator Fees
     ' disbursements
-    wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!Allocation_PrimOperator,Disbursements!$C$9:$C$" & iLastRow & ")"
+    'wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!Allocation_PrimOperator,Disbursements!$C$9:$C$" & iLastRow & ")"
+    wsQuote.Range("Fee_Disbursements_PrimOp").Formula = "=SUMIFS(Disbursements!$F$9:$F$" & iLastRow & ",Disbursements!A9:A" & iLastRow _
+    & ",'Quote'!C" & i & ",Disbursements!$D$9:$D$" & iLastRow & ", " & chr(34) & "Exclusive" & chr(34) & ")"
+    
     
     ' SC Allocation
     wsQuote.Range("Fee_SCAllocation_PrimOp").Formula = "=SCDisbursementFeeTotal"
 
     ' net fee = Gross - (Disbursements + SC Allocation)
-    wsQuote.Range("Fee_Net_PrimOp").Formula = "=Fee_GrossFee_PrimOp-Fee_Disbursements_PrimOp-Fee_SCAllocation_PrimOp"
+    wsQuote.Range("Fee_Net_PrimOp").Formula = "=Fee_GrossFee_PrimOp+Fee_Disbursements_PrimOp+Fee_SCAllocation_PrimOp"
     
     ' amend formulas for the additional operators in Quote worksheet
     Call Allocation_InputFormulas
@@ -372,7 +379,7 @@ Dim iLastRow As Long
     iLastRow = lastRow(wsDisbursements.Name, sortCell_K1)
 
     If iLastRow > 500000 Then  ' indicates no disbursements
-       ' default to 100
+       ' default to 120
        iLastRow = 120
        wsDisbursements.Range(sortCell_K1).Select
     End If
@@ -396,10 +403,12 @@ Dim iLastRow As Long
         End If
         
         ' disbursements
-        wsQuote.Range("F" & i).Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!C" & i & ",Disbursements!$C$9:$C$" & iLastRow & ")"
+        'wsQuote.Range("F" & i).Formula = "=SUMIF(Disbursements!$A$9:$A$" & iLastRow & ",'Quote'!C" & i & ",Disbursements!$C$9:$C$" & iLastRow & ")"
+        wsQuote.Range("F" & i).Formula = "=SUMIFS(Disbursements!$F$9:$F$" & iLastRow & ",Disbursements!A9:A" & iLastRow _
+        & ",'Quote'!C" & i & ",Disbursements!$D$9:$D$" & iLastRow & ", " & chr(34) & "Exclusive" & chr(34) & ")"
         
         ' net fee = Gross - (Disbursements + SC Allocation)
-        wsQuote.Range("H" & i).Formula = "=E" & i & "-F" & i & "-G" & i
+        wsQuote.Range("H" & i).Formula = "=E" & i & "+F" & i & "+G" & i
     
     Next i
 
@@ -414,9 +423,22 @@ Dim iLastRow As Long
         wsQuote.Range("Fee_FeePercentage_PrimOp") = 0
     End If
 
+    
+    ' sort list in order of user only if data was successfully inserted
+    iLastRow = lastRow(wsSubConsultants.Name, sortCell_K2)
+
+    If iLastRow > 500000 Then  ' indicates no disbursements
+       ' default to 120
+       iLastRow = 120
+       wsSubConsultants.Range(sortCell_K2).Select
+    End If
+    
     ' reset formula range for scope item (i.e. TDD, Sched Make Good, FARR, Progress Claim etc..) in Auto Quote worksheet
     For i = AutoQuote_ScopeStartRow To AutoQuote_ScopeLastRow
-        wsQuote.Range("F" & i).Formula = "=SUMIF(SubConsultants!$B$9:$B$200" & ",'Quote'!C" & i & ",SubConsultants!$D$9:$D$200" & ")"
+        'wsQuote.Range("F" & i).Formula = "=SUMIF(SubConsultants!$B$9:$B$200" & ",'Quote'!C" & i & ",SubConsultants!$D$9:$D$200" & ")"
+        wsQuote.Range("F" & i).Formula = "=SUMIFS(SubConsultants!$D$9:$D$" & iLastRow & ",SubConsultants!$B$9:$B$" & iLastRow _
+            & ",Quote!C" & i & ",SubConsultants!E9:E" & iLastRow & "," & chr(34) & "Exclusive" & chr(34) & ")"
+
     Next i
     Call settings(True)
 

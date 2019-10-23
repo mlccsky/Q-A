@@ -16,7 +16,7 @@ Public Const AutoQuote_ScopeLastRow = 82
 Public Const AutoQuote_SubcontractorStartRow = 64
 Public Const AutoQuote_SubcontractorLastRow = 84
 
-Public Const iMaxNoOfUsers = 22
+Public Const iMaxNoOfUsers = 23
 
 Public aScopes As Variant
 

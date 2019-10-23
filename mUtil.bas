@@ -83,9 +83,9 @@ Dim i As Integer
         ' check whether an address/portfolio exists
         If Len(wsQuote.Range("PFAddress_01")) > 0 Then
             sAddress = cleanAddress(sAddress)
-            sTempFile = wsQuote.Range("zzListFilePath") & sAddress & "_" & Format(Now, "yyyymmdd") & ".xlsb"
+            sTempFile = wsQuote.Range("zzListFilePath") & sAddress & "_" & VBA.Format(Now, "yyyymmdd") & ".xlsb"
         Else
-            sTempFile = wsQuote.Range("zzListFilePath") & "Q&A_" & Format(Now, "yyyymmdd_hhmm") & ".xlsb"
+            sTempFile = wsQuote.Range("zzListFilePath") & "Q&A_" & VBA.Format(Now, "yyyymmdd_hhmm") & ".xlsb"
         End If
         
         ' check if the file exists. if it does, add/increment the version
@@ -107,7 +107,7 @@ Exit_saveFile:
 Save_Default:
     ' save in user's local default location
     wsQuote.Range("zzListFilePath") = Application.DefaultFilePath & "\"
-    sTempFile = wsQuote.Range("zzListFilePath") & "Q&A_" & wsQuote.Range("PropertyMID_01a") & "_" & Format(Now, "yyyymmdd") & ".xlsb"
+    sTempFile = wsQuote.Range("zzListFilePath") & "Q&A_" & wsQuote.Range("PropertyMID_01a") & "_" & VBA.Format(Now, "yyyymmdd") & ".xlsb"
     
     ' check if file exists
     If Len(Dir(sTempFile, vbNormal)) > 0 Then

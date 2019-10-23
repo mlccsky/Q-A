@@ -301,7 +301,7 @@ Dim ts As Object
 Dim TempFile As String
 Dim TempWB As Workbook
 
-TempFile = Environ$("temp") & "\" & Format(Now, "dd-mm-yy h-mm-ss") & ".htm"
+TempFile = Environ$("temp") & "\" & VBA.Format(Now, "dd-mm-yy h-mm-ss") & ".htm"
 
     'Copy range and create new workbook to paste data
     Set TempWB = Workbooks.Add(1)
